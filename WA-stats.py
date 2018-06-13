@@ -5,9 +5,21 @@
 import pandas as pd
 import re
 from dateutil.parser import parse
+import os
+import sys
 
-# TXT_FILE = "WhatsApp Chat with Brunoy foot  Club.txt"
-TXT_FILE = "test.txt"
+TXT_FILE = ""
+for root, dirs, files in os.walk(os.getcwd()):
+    for f in files:
+        if "whatsapp" in f.lower():
+            TXT_FILE = f
+            break
+    break
+if TXT_FILE == "":
+    print("No WhatsApp file found, exiting...") 
+    sys.exit()
+else:
+    print("Using file: {0}".format(TXT_FILE))
 HEADER = 0
 
 # ===== File parsing =====
