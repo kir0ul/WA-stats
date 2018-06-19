@@ -54,5 +54,6 @@ print(data.tail())
 
 
 # ===== Compute some stats =====
-name_set = set(data["name"])
+name_set = list(set(data["name"]))
 name_set.remove(None)
+msg_count = data.groupby("name").size()
