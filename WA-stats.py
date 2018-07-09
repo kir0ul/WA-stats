@@ -7,6 +7,7 @@ import re
 from dateutil.parser import parse
 import os
 import sys
+import numpy as np
 
 TXT_FILE = ""
 for root, dirs, files in os.walk(os.getcwd()):
@@ -61,3 +62,10 @@ name_set.remove(None)
 msg_count = data.groupby("name").size()
 
 # Cumulated number of messages by name
+msg_cum_count = {}
+for name in name_set:
+    data_name = data[data.name == name]
+    msg_cum_count[name] = {}
+    msg_cum_count[name]["t"] = data_name.datetime
+    msg_cum_count[name]["y"] = np.ones(len(data_name))
+    msg_cum_count[name]["y"] = np.cumsum(msg_cum_count[name]["y"])
