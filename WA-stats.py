@@ -60,6 +60,7 @@ print(data.tail())
 name_set = list(set(data["name"]))
 name_set.remove(None)
 msg_count = data.groupby("name").size()
+print("\nmsg_count:\n{}".format(msg_count))
 
 # Cumulated number of messages by name
 msg_cum_count = {}
@@ -69,3 +70,9 @@ for name in name_set:
     msg_cum_count[name]["t"] = data_name.datetime
     msg_cum_count[name]["y"] = np.ones(len(data_name))
     msg_cum_count[name]["y"] = np.cumsum(msg_cum_count[name]["y"])
+
+# Histogram of messages by hour
+hours = data.index.floor('1H').map(lambda x: x.time().hour)
+bins = range(0, 24)
+cats = pd.cut(hours, bins)
+histo = pd.value_counts(cats).sort_index()
