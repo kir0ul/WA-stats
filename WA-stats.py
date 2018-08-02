@@ -76,3 +76,15 @@ hours = data.index.floor('1H').map(lambda x: x.time().hour)
 bins = range(0, 24)
 cats = pd.cut(hours, bins)
 histo = pd.value_counts(cats).sort_index()
+
+# Words frequencies
+all_words = []
+for item in data['message']:
+    all_words.extend(item.split(' '))
+all_words = pd.DataFrame(all_words)  # To be able to count easily
+words_set = pd.DataFrame(list(set(all_words[0])), columns=["words"])
+words_set["count"] = 0
+for word in words_set["words"]:
+    count = all_words[all_words[0] == word].size
+    words_set[words_set.count == word] = count
+print("\nWord frequencies:\n{}".format(words_set.head()))
