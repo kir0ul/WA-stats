@@ -17,7 +17,7 @@ for root, dirs, files in os.walk(os.getcwd()):
             break
     break
 if TXT_FILE == "":
-    print("No WhatsApp file found, exiting...") 
+    print("No WhatsApp file found, exiting...")
     sys.exit()
 else:
     print("Using file: {0}".format(TXT_FILE))
@@ -86,5 +86,5 @@ words_set = pd.DataFrame(list(set(all_words[0])), columns=["words"])
 words_set["count"] = 0
 for word in words_set["words"]:
     count = all_words[all_words[0] == word].size
-    words_set[words_set.count == word] = count
-print("\nWord frequencies:\n{}".format(words_set.head()))
+    words_set.loc[words_set[words_set.words == word].index, "count"] = count
+print("\nWord frequencies:\n{}".format(words_set.sort(columns="count", ascending=False).head()))
